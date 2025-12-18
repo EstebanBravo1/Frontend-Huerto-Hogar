@@ -1,0 +1,87 @@
+===============================================
+CONFIGURAR BACKEND PARA INICIO AUTOMÁTICO
+===============================================
+
+1. CONECTARSE A EC2 DESDE POWERSHELL:
+--------------------------------------
+ssh -i "C:\Users\alvar\Desktop\react\ecommerce-key.pem" ubuntu@34.201.115.114
+
+
+2. DETENER EL PROCESO ACTUAL:
+------------------------------
+pkill -f backend-0.0.1-SNAPSHOT.jar
+
+
+3. CREAR EL ARCHIVO DE SERVICIO:
+---------------------------------
+sudo nano /etc/systemd/system/backend.service
+
+
+4. PEGAR ESTE CONTENIDO EN EL EDITOR:
+--------------------------------------
+[Unit]
+Description=Spring Boot Backend
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/usr/bin/java -jar /home/ubuntu/backend-0.0.1-SNAPSHOT.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+
+5. GUARDAR EL ARCHIVO EN NANO:
+-------------------------------
+Ctrl + O  (guardar)
+Enter     (confirmar)
+Ctrl + X  (salir)
+
+
+6. ACTIVAR E INICIAR EL SERVICIO:
+----------------------------------
+sudo systemctl daemon-reload
+sudo systemctl enable backend
+sudo systemctl start backend
+sudo systemctl status backend
+
+
+===============================================
+COMANDOS ÚTILES PARA MANEJAR EL SERVICIO
+===============================================
+
+Ver logs en tiempo real:
+sudo journalctl -u backend -f
+
+Reiniciar el servicio:
+sudo systemctl restart backend
+
+Detener el servicio:
+sudo systemctl stop backend
+
+Ver estado del servicio:
+sudo systemctl status backend
+
+Deshabilitar inicio automático:
+sudo systemctl disable backend
+
+
+===============================================
+ACTUALIZAR EL BACKEND EN EL FUTURO
+===============================================
+
+1. Desde PowerShell, subir el nuevo JAR:
+scp -i "C:\Users\alvar\Desktop\react\ecommerce-key.pem" "C:\Users\alvar\Desktop\ACTUAL\backend\target\backend-0.0.1-SNAPSHOT.jar" ubuntu@34.201.115.114:/home/ubuntu/
+
+2. Conectarse a EC2:
+ssh -i "C:\Users\alvar\Desktop\react\ecommerce-key.pem" ubuntu@34.201.115.114
+
+3. Reiniciar el servicio:
+sudo systemctl restart backend
+
+4. Verificar que funciona:
+sudo systemctl status backend

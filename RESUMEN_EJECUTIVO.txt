@@ -1,0 +1,288 @@
+================================================================================
+RESUMEN EJECUTIVO - PROYECTO HUERTO HOGAR
+================================================================================
+
+PROYECTO: E-commerce de Productos Orgánicos - Huerto Hogar
+FECHA: 12 de Diciembre de 2025
+TIPO: Aplicación web full-stack con microservicios
+
+================================================================================
+1. VISIÓN GENERAL
+================================================================================
+
+Huerto Hogar es una aplicación de e-commerce completa que permite a los usuarios:
+- Navegar y filtrar productos orgánicos
+- Registrarse y autenticarse
+- Agregar productos al carrito
+- Realizar compras a través de un proceso de checkout integrado
+- Procesar pagos simulados con Transbank
+
+================================================================================
+2. ARQUITECTURA
+================================================================================
+
+FRONTEND (React.js - Puerto 5173)
+├── Componentes React modulares
+├── Context API para estado global
+├── React Router para navegación
+└── Bootstrap 5 para estilos
+
+BACKEND - 3 MICROSERVICIOS:
+├── Productos (Puerto 8080): Catálogo y detalles de productos
+├── Ventas (Puerto 8081): Procesamiento de órdenes y pagos
+└── Usuarios (Puerto 8082): Autenticación y perfiles
+
+BASE DE DATOS:
+└── PostgreSQL alojada en AWS
+
+================================================================================
+3. USUARIOS DE PRUEBA
+================================================================================
+
+Email: juan.perez@email.com      | Contraseña: 123456
+Email: maria.gonzalez@email.com  | Contraseña: 123456
+Email: carlos.rodriguez@email.com | Contraseña: 123456
+Email: ana.martinez@email.com    | Contraseña: 123456
+Email: luis.fernandez@email.com  | Contraseña: 123456
+
+================================================================================
+4. FUNCIONALIDADES PRINCIPALES
+================================================================================
+
+✓ Sistema de autenticación completo
+✓ Carrito de compras con persistencia en localStorage
+✓ Proceso de checkout con autocompletado de datos
+✓ Integración Transbank (simulada)
+✓ Diseño responsive para todos los dispositivos
+✓ Filtros y búsqueda de productos
+✓ Sistema de notificaciones
+✓ Tests unitarios incluidos
+
+================================================================================
+5. FLUJO DE UN PEDIDO
+================================================================================
+
+1. Usuario se autentica
+2. Navega catálogo de productos
+3. Agrega productos al carrito
+4. Revisa carrito
+5. Inicia proceso de checkout
+6. Sistema pre-carga datos del usuario
+7. Usuario confirma información
+8. Se procesa pago con Transbank
+9. Se muestra confirmación de orden
+10. Carrito se vacía
+
+================================================================================
+6. ENDPOINTS PRINCIPALES
+================================================================================
+
+PRODUCTOS (8080):
+- GET /api/products
+- GET /api/products/{id}
+- GET /api/products/category/{cat}
+
+VENTAS (8081):
+- POST /api/sales/init
+- GET /api/sales/{id}
+- GET /api/sales
+
+USUARIOS (8082):
+- POST /api/auth/login
+- POST /api/auth/register
+- GET /api/auth/verify
+
+================================================================================
+7. STACK TECNOLÓGICO
+================================================================================
+
+FRONTEND:
+- React 19.1.1
+- React Router DOM 7.1.1
+- React Bootstrap 2.10.6
+- Bootstrap 5.3.3
+- Vite 6.0.3
+- JavaScript ES6+
+
+BACKEND:
+- Spring Boot 4.0.0
+- Java 17
+- Spring Data JPA
+- PostgreSQL Driver
+- Transbank SDK (en sales)
+
+TESTING:
+- Jasmine
+- Karma
+
+DEPLOYMENT:
+- AWS EC2
+- Elastic IP
+
+================================================================================
+8. COMPONENTES CLAVE DEL FRONTEND
+================================================================================
+
+AuthContext.jsx
+├─ Maneja autenticación de usuarios
+├─ Persiste sesión en localStorage
+└─ Proporciona estado global para toda la app
+
+CartContext.jsx
+├─ Gestiona carrito de compras
+├─ Calcula totales automáticamente
+└─ Persiste items en localStorage
+
+routes.jsx
+├─ / → Home
+├─ /productos → Listado de productos
+├─ /productos/:codigo → Detalle del producto
+├─ /carrito → Carrito de compras
+├─ /login → Autenticación
+└─ /contacto → Contacto
+
+CheckoutForm.jsx
+├─ Formulario de pago
+├─ Auto-completa datos del usuario
+└─ Integra con microservicio de ventas
+
+================================================================================
+9. CARACTERÍSTICAS DE SEGURIDAD
+================================================================================
+
+✓ Validación de credenciales
+✓ Persistencia segura de sesiones
+✓ CORS habilitado en microservicios
+✓ Validación de entrada en formularios
+✓ Protección de rutas
+✓ Logout limpia toda la sesión
+
+Recomendaciones para producción:
+- Implementar JWT real
+- HTTPS en todas las comunicaciones
+- Encriptación de contraseñas (bcrypt)
+- Rate limiting contra brute force
+- Logging y auditoría
+
+================================================================================
+10. TESTING
+================================================================================
+
+Tipos de tests incluidos:
+- Tests de arrays y funciones
+- Tests con mocks de localStorage
+- Tests de funcionalidades del proyecto
+
+Comandos:
+npm test                    # Ejecutar todos los tests
+npm test -- --watch       # Modo watch
+npm test -- --code-coverage # Ver cobertura
+
+================================================================================
+11. DEPLOYMENT EN AWS
+================================================================================
+
+Instancia EC2:
+- IP: 34.201.115.114 (Elastic IP)
+- Java 17 instalado
+- PostgreSQL configurado
+- 3 microservicios ejecutándose en puertos 8080, 8081, 8082
+
+Local:
+npm install    # Instalar dependencias
+npm run dev    # Ejecutar servidor de desarrollo
+
+Producción:
+npm run build  # Generar build optimizado
+
+================================================================================
+12. FORTALEZAS DEL PROYECTO
+================================================================================
+
+✓ Arquitectura profesional de microservicios
+✓ Separación clara de responsabilidades
+✓ Frontend moderno y responsive
+✓ Documentación completa
+✓ Tests unitarios incluidos
+✓ Fácilmente escalable
+✓ Deployment en AWS
+✓ Buenas prácticas de desarrollo
+
+================================================================================
+13. ÁREAS DE MEJORA SUGERIDAS
+================================================================================
+
+- Autenticación real con JWT
+- Mayor cobertura de tests
+- Logging centralizado
+- GraphQL como alternativa a REST
+- Rate limiting
+- Sistema de reviews
+- Historial de órdenes
+- Panel administrativo
+- Análisis y reportes
+- Múltiples pasarelas de pago
+
+================================================================================
+14. TECNOLOGÍAS FUTURAS RECOMENDADAS
+================================================================================
+
+- Docker para containerización
+- Kubernetes para orquestación
+- Redis para caching
+- RabbitMQ/Kafka para mensajería
+- API Gateway
+- Service Mesh (Istio)
+
+================================================================================
+15. DOCUMENTACIÓN INCLUIDA
+================================================================================
+
+INFORME_COMPLETO_HUERTO_HOGAR.docx
+└─ Análisis detallado de 13 secciones
+
+README.md
+├─ Descripción general del proyecto
+├─ Instrucciones de instalación
+├─ Documentación de usuario
+└─ Características principales
+
+DOCUMENTACION_PROYECTO.md
+├─ Análisis por archivo
+├─ Explicación de código
+└─ Guías técnicas
+
+================================================================================
+16. PUNTOS DE INICIO
+================================================================================
+
+Para desarrolladores:
+1. Revisar INFORME_COMPLETO_HUERTO_HOGAR.docx
+2. Estudiar estructura de carpetas en sección 3
+3. Entender flujos en sección 6-7
+4. Explorar código fuente
+
+Para estudiantes:
+1. Leer descripción general (sección 1)
+2. Entender arquitectura (sección 2)
+3. Estudiar frontend (sección 3)
+4. Estudiar backend (sección 4)
+5. Analizar flujos (sección 6-7)
+
+================================================================================
+17. INFORMACIÓN DEL PROYECTO
+================================================================================
+
+Proyecto: DSY1104-Bravo-Sarria
+Desarrollador: Equipo Bravo-Sarria
+Fecha: Diciembre 2025
+
+Ubicación del código:
+- Frontend: DSY1104-Bravo-Sarria/
+- Backend Productos: backend/
+- Backend Ventas: sales/
+- Backend Usuarios: users-service/
+
+================================================================================
+FIN DEL RESUMEN EJECUTIVO
+================================================================================
