@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Imágenes</title>
+</head>
+<body>
+    <h1>Debug de Imágenes - Frescura Natural</h1>
+    
+    <h2>Prueba 1: Ruta directa desde public</h2>
+    <div>
+        <p>Ruta: /assets/imagenes/Manzana-Fuji-granel.png</p>
+        <img src="/assets/imagenes/Manzana-Fuji-granel.png" alt="Manzana" style="width: 200px; border: 1px solid red;">
+    </div>
+    
+    <h2>Prueba 2: Ruta relativa</h2>
+    <div>
+        <p>Ruta: ./public/assets/imagenes/Manzana-Fuji-granel.png</p>
+        <img src="./public/assets/imagenes/Manzana-Fuji-granel.png" alt="Manzana" style="width: 200px; border: 1px solid blue;">
+    </div>
+    
+    <h2>Prueba 3: Varias imágenes del listado</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <div>
+            <p>Espinacas_Frescas.png</p>
+            <img src="/assets/imagenes/Espinacas_Frescas.png" alt="Espinacas" style="width: 150px;">
+        </div>
+        <div>
+            <p>Lechuga_Romana.png</p>
+            <img src="/assets/imagenes/Lechuga_Romana.png" alt="Lechuga" style="width: 150px;">
+        </div>
+        <div>
+            <p>Platano_Cavendish.png</p>
+            <img src="/assets/imagenes/Platano_Cavendish.png" alt="Plátano" style="width: 150px;">
+        </div>
+        <div>
+            <p>Naranjas_Valencias.png</p>
+            <img src="/assets/imagenes/Naranjas_Valencias.png" alt="Naranjas" style="width: 150px;">
+        </div>
+    </div>
+
+    <script>
+        // Verificar si las imágenes cargan correctamente
+        document.querySelectorAll('img').forEach((img, index) => {
+            img.onload = function() {
+                console.log(`✅ Imagen ${index + 1} cargada correctamente: ${this.src}`);
+            };
+            
+            img.onerror = function() {
+                console.error(`❌ Error cargando imagen ${index + 1}: ${this.src}`);
+                this.style.border = '2px solid red';
+                this.style.backgroundColor = '#ffeeee';
+            };
+        });
+        
+        // Verificar acceso directo a las rutas
+        const testPaths = [
+            '/assets/imagenes/Manzana-Fuji-granel.png',
+            '/assets/imagenes/Espinacas_Frescas.png',
+            '/assets/imagenes/Lechuga_Romana.png',
+            '/assets/imagenes/Platano_Cavendish.png'
+        ];
+        
+        console.log('🔍 Probando acceso directo a imágenes:');
+        testPaths.forEach(path => {
+            fetch(path)
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`✅ Acceso correcto a: ${path}`);
+                    } else {
+                        console.error(`❌ Error ${response.status} en: ${path}`);
+                    }
+                })
+                .catch(error => {
+                    console.error(`❌ Error de red en: ${path}`, error);
+                });
+        });
+    </script>
+</body>
+</html>

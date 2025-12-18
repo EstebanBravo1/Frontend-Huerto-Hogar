@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test de imágenes</title>
+</head>
+<body>
+    <h1>Prueba de rutas de imágenes</h1>
+    
+    <h2>Imagen del home:</h2>
+    <img src="/assets/imagenes/cesta-llena-verduras.png" alt="Cesta" style="width: 200px;">
+    
+    <h2>Imagen de producto:</h2>
+    <img src="/assets/imagenes/Manzana-Fuji-granel.png" alt="Manzana" style="width: 200px;">
+    
+    <h2>Otra imagen de producto:</h2>
+    <img src="/assets/imagenes/Zanahorias_Organicas.png" alt="Zanahorias" style="width: 200px;">
+    
+    <script>
+        // Verificar si las imágenes cargan correctamente
+        const images = document.querySelectorAll('img');
+        images.forEach((img, index) => {
+            img.onload = () => console.log(`✅ Imagen ${index + 1} cargada correctamente:`, img.src);
+            img.onerror = () => console.error(`❌ Error cargando imagen ${index + 1}:`, img.src);
+        });
+    </script>
+</body>
+</html>
